@@ -7,47 +7,55 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="태민 마일리지">
 <title>태민이 마일리지 🏆</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/pretendard/1.3.9/variable/pretendardvariable.min.css" rel="stylesheet">
 <style>
 :root {
-  --or:#FF6B35;--or-lt:#FFF0EB;--or-md:#FFD4C2;
-  --gn:#2ECC71;--gn-lt:#E8FAF0;
-  --gn2:#16A34A;
+  --or:#6366F1;--or-lt:#EEF2FF;--or-md:#C7D2FE;
+  --gn:#10B981;--gn-lt:#D1FAE5;
+  --gn2:#059669;
   --bl:#3B82F6;--bl-lt:#EFF6FF;
-  --rd:#EF4444;--rd-lt:#FEF2F2;
+  --rd:#EF4444;--rd-lt:#FEE2E2;
   --pu:#8B5CF6;--pu-lt:#F5F3FF;
-  --yw:#F59E0B;--yw-lt:#FFFBEB;
-  --bg:#F1F5F9;--bg2:#E8EEF4;
+  --yw:#F59E0B;--yw-lt:#FEF3C7;
+  --bg:#F8FAFC;--bg2:#F1F5F9;
   --card:#FFFFFF;--card2:#F8FAFC;
-  --tx:#0F172A;--tx2:#64748B;--tx3:#CBD5E1;
+  --tx:#0F172A;--tx2:#64748B;--tx3:#94A3B8;
   --bdr:#E2E8F0;--bdr2:#CBD5E1;
-  --tabbar:rgba(255,255,255,0.96);
-  --r:16px;--rsm:10px;--rlg:22px;--rxl:28px;
+  --tabbar:rgba(255,255,255,0.85);
+  --r:16px;--rsm:12px;--rlg:22px;--rxl:28px;
+  --shadow:0 4px 24px rgba(15,23,42,0.08);
+  --shadow-lg:0 12px 40px rgba(15,23,42,0.12);
 }
 body.dark{
-  --bg:#0A0F1E;--bg2:#141C2E;
-  --card:#141C2E;--card2:#1A2540;
-  --tx:#F1F5F9;--tx2:#94A3B8;--tx3:#334155;
-  --bdr:#1E2D45;--bdr2:#253650;
-  --tabbar:rgba(10,15,30,0.97);
-  --or-lt:rgba(255,107,53,.14);--gn-lt:rgba(46,204,113,.14);
-  --bl-lt:rgba(59,130,246,.14);--rd-lt:rgba(239,68,68,.14);
-  --pu-lt:rgba(139,92,246,.14);--yw-lt:rgba(245,158,11,.14);
+  --bg:#0F172A;--bg2:#1E293B;
+  --card:#1E293B;--card2:#334155;
+  --tx:#F1F5F9;--tx2:#94A3B8;--tx3:#475569;
+  --bdr:#334155;--bdr2:#475569;
+  --tabbar:rgba(30,41,59,0.9);
+  --or-lt:rgba(99,102,241,.15);--gn-lt:rgba(16,185,129,.15);
+  --bl-lt:rgba(59,130,246,.15);--rd-lt:rgba(239,68,68,.15);
+  --pu-lt:rgba(139,92,246,.15);--yw-lt:rgba(245,158,11,.15);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--tx);max-width:430px;margin:0 auto;min-height:100vh;overflow-x:hidden;transition:background .25s,color .25s}
+body{font-family:'Pretendard Variable',-apple-system,sans-serif;background:var(--bg);color:var(--tx);max-width:430px;margin:0 auto;min-height:100vh;overflow-x:hidden;transition:background .25s,color .25s}
 
 /* SCREENS */
-.scr{display:none;min-height:100vh;padding-bottom:96px;overflow-y:auto}
-.scr.on{display:block}
+.scr{display:none;min-height:100vh;padding-bottom:110px;overflow-y:auto}
+.scr.on{display:block;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
-/* TABBAR */
-.tabbar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:var(--tabbar);backdrop-filter:blur(24px);border-top:1px solid var(--bdr);display:flex;justify-content:space-around;padding:8px 0 22px;z-index:90;transition:background .25s}
-.tab{display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;padding:4px 10px}
-.tab .ico{font-size:22px;transition:transform .2s}
-.tab .lbl{font-size:10px;font-weight:800;color:var(--tx3);transition:color .15s}
-.tab.on .lbl{color:var(--or)}
-.tab.on .ico{transform:scale(1.2)}
+/* BOTTOM NAV - Floating Glass Pill with SVG Icons */
+.nav-container{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:100}
+.bottom-nav{display:flex;align-items:center;gap:4px;background:var(--tabbar);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border:1px solid rgba(255,255,255,0.4);border-radius:28px;padding:8px 10px;box-shadow:var(--shadow-lg),0 0 0 1px rgba(0,0,0,0.04)}
+body.dark .bottom-nav{border-color:rgba(255,255,255,0.1)}
+.nav-item{display:flex;align-items:center;justify-content:center;gap:6px;padding:12px 14px;border-radius:22px;cursor:pointer;transition:all .25s cubic-bezier(.4,0,.2,1);border:none;background:transparent}
+.nav-item svg{width:22px;height:22px;stroke:var(--tx3);stroke-width:2;fill:none;transition:all .25s}
+.nav-item .nav-label{font-size:12px;font-weight:700;color:var(--or);max-width:0;overflow:hidden;white-space:nowrap;transition:all .3s cubic-bezier(.4,0,.2,1);opacity:0}
+.nav-item.active{background:var(--or-lt);padding:12px 18px}
+.nav-item.active svg{stroke:var(--or)}
+.nav-item.active .nav-label{max-width:50px;opacity:1;margin-left:2px}
+.nav-item:not(.active):hover{background:rgba(99,102,241,0.08)}
+.nav-item:not(.active):active{transform:scale(0.95)}
 
 /* TOPBAR */
 .top{padding:52px 18px 10px;display:flex;justify-content:space-between;align-items:flex-start}
@@ -59,9 +67,9 @@ body.dark .dtog{background:#334155}
 body.dark .dtog-in{transform:translateX(24px)}
 
 /* HERO */
-.hero{margin:8px 16px 14px;background:linear-gradient(135deg,#FF6B35,#FF9A5C);border-radius:var(--rxl);padding:22px;color:#fff;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:rgba(255,255,255,.08);border-radius:50%}
-.hero::after{content:'';position:absolute;bottom:-30px;left:20px;width:110px;height:110px;background:rgba(255,255,255,.05);border-radius:50%}
+.hero{margin:8px 16px 14px;background:linear-gradient(135deg,#6366F1,#818CF8);border-radius:var(--rxl);padding:22px;color:#fff;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:rgba(255,255,255,.1);border-radius:50%}
+.hero::after{content:'';position:absolute;bottom:-30px;left:20px;width:110px;height:110px;background:rgba(255,255,255,.08);border-radius:50%}
 .hero-lbl{font-size:12px;font-weight:700;opacity:.85}
 .hero-pts{font-size:54px;font-weight:900;letter-spacing:-2px;line-height:1}
 .hero-unit{font-size:18px;font-weight:700;opacity:.85}
@@ -273,7 +281,16 @@ body.dark .dtog-in{transform:translateX(24px)}
   <div class="top">
     <div class="top-l">
       <h1 id="greeting-txt">안녕, 태민아! 👋</h1>
-      <p id="today-str"></p>
+      <div style="display:flex;align-items:center;gap:8px;margin-top:4px;flex-wrap:wrap">
+        <p id="today-str" style="margin:0"></p>
+        <div id="weather-badge" style="display:inline-flex;align-items:center;gap:4px;background:var(--bl-lt);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;color:var(--bl)">
+          <span id="weather-icon">☀️</span><span id="weather-temp">--°</span>
+        </div>
+        <div id="dust-badge" style="display:inline-flex;align-items:center;gap:4px;background:var(--gn-lt);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;color:var(--gn2)">
+          <span id="dust-dot" style="width:6px;height:6px;border-radius:50%;background:var(--gn)"></span><span id="dust-text">좋음</span>
+        </div>
+      </div>
+      <p id="smart-msg" style="font-size:12px;color:var(--tx2);margin-top:6px;font-weight:600;line-height:1.4"></p>
     </div>
     <button class="dtog" onclick="toggleDark()"><div class="dtog-in" id="dtog-ic">☀️</div></button>
   </div>
@@ -390,6 +407,26 @@ body.dark .dtog-in{transform:translateX(24px)}
   </div>
   <div id="adm-p2" style="display:none">
     <div class="adm-sec">
+      <div class="adm-sec-lbl">💬 스마트 메시지 설정</div>
+      <div class="adm-card">
+        <div class="adm-row">
+          <div class="adm-row-l"><div class="adm-row-nm">메시지 모드</div><div class="adm-row-sub">자동: 날씨/미세먼지 연동</div></div>
+          <select id="msg-mode-sel" onchange="saveMsgMode()" style="padding:6px 10px;border:1.5px solid var(--bdr);border-radius:9px;font-size:13px;font-weight:700;background:var(--bg);color:var(--tx);font-family:inherit">
+            <option value="auto">자동</option>
+            <option value="custom">직접 입력</option>
+          </select>
+        </div>
+        <div class="divider"></div>
+        <div class="adm-row" id="custom-msg-row" style="display:none;flex-direction:column;align-items:stretch;gap:8px">
+          <div class="adm-row-l" style="width:100%"><div class="adm-row-nm">직접 메시지 입력</div></div>
+          <div style="display:flex;gap:8px">
+            <input class="txt-inp" id="custom-msg-inp" type="text" placeholder="오늘도 화이팅! 💪" maxlength="50">
+            <button class="btn-sm" onclick="saveCustomMsg()">저장</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="adm-sec">
       <div class="adm-sec-lbl">홈 화면 인사말 변경</div>
       <div class="adm-card">
         <div class="adm-row">
@@ -471,13 +508,30 @@ body.dark .dtog-in{transform:translateX(24px)}
   </div>
 </div>
 
-<!-- TABBAR -->
-<div class="tabbar">
-  <div class="tab on" id="tab-home" onclick="goTab('home')"><div class="ico">🏠</div><div class="lbl">홈</div></div>
-  <div class="tab" id="tab-log" onclick="goTab('log')"><div class="ico">✅</div><div class="lbl">활동기록</div></div>
-  <div class="tab" id="tab-rwd" onclick="goTab('rwd')"><div class="ico">🎁</div><div class="lbl">보상</div></div>
-  <div class="tab" id="tab-hist" onclick="goTab('hist')"><div class="ico">📊</div><div class="lbl">기록</div></div>
-  <div class="tab" id="tab-adm" onclick="goTab('adm')"><div class="ico">⚙️</div><div class="lbl">관리자</div></div>
+<!-- BOTTOM NAV - Floating Glass Pill with SVG Icons -->
+<div class="nav-container">
+  <nav class="bottom-nav">
+    <div class="nav-item active" data-tab="home" id="tab-home" onclick="goTab('home')">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+      <span class="nav-label">홈</span>
+    </div>
+    <div class="nav-item" data-tab="log" id="tab-log" onclick="goTab('log')">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      <span class="nav-label">활동</span>
+    </div>
+    <div class="nav-item" data-tab="rwd" id="tab-rwd" onclick="goTab('rwd')">
+      <svg viewBox="0 0 24 24"><path d="M20 12v10H4V12"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z"/></svg>
+      <span class="nav-label">보상</span>
+    </div>
+    <div class="nav-item" data-tab="hist" id="tab-hist" onclick="goTab('hist')">
+      <svg viewBox="0 0 24 24"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+      <span class="nav-label">기록</span>
+    </div>
+    <div class="nav-item" data-tab="adm" id="tab-adm" onclick="goTab('adm')">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+      <span class="nav-label">관리</span>
+    </div>
+  </nav>
 </div>
 
 <!-- MODAL: 교환 확인 -->
@@ -673,7 +727,7 @@ function defaultState(){
     acts:JSON.parse(JSON.stringify(DACTS)),
     rwds:JSON.parse(JSON.stringify(DRWDS)),
     log:[],
-    settings:{streakBonus:true,streakBonusPts:100,pin:'1234'},
+    settings:{streakBonus:true,streakBonusPts:100,pin:'1234',msgMode:'auto',customMsg:''},
     actDone:{},
     dark:false,
     greeting:'안녕, 태민아! 👋',
@@ -738,6 +792,32 @@ function applyDark(v){
   if(td)td.classList.toggle('off',!v);
 }
 function toggleDark(){S.dark=!S.dark;applyDark(S.dark);save();}
+
+// ── SMART MESSAGE SYSTEM ─────────────────────
+const DAILY_MSGS=['오늘도 멋진 하루 보내자! 💪','화이팅! 넌 할 수 있어! ⭐','좋은 아침이야! 🌅','잘 잤어? 오늘도 파이팅! 💫','태민아, 오늘도 응원해! 🎯','새로운 하루가 시작됐어! 🌈'];
+const WEATHER_MSGS={sunny:{icon:'☀️',msg:'날씨가 화창해! 밖에서 놀기 좋은 날이야 🌳'},cloudy:{icon:'☁️',msg:'구름이 많지만 기분은 맑게! ⛅'},rainy:{icon:'🌧️',msg:'비가 오네! 우산 챙겼어? 🌂'},snowy:{icon:'❄️',msg:'눈이 와요! 따뜻하게 입고 다녀! ⛄'}};
+const DUST_MSGS={good:{level:'좋음',color:'var(--gn)',bgColor:'var(--gn-lt)',txtColor:'var(--gn2)'},moderate:{level:'보통',color:'var(--yw)',bgColor:'var(--yw-lt)',txtColor:'#B45309',msg:'미세먼지가 조금 있어요'},bad:{level:'나쁨',color:'var(--or)',bgColor:'var(--or-lt)',txtColor:'var(--or)',msg:'마스크 쓰고 나가자! 😷'},worst:{level:'매우나쁨',color:'var(--rd)',bgColor:'var(--rd-lt)',txtColor:'var(--rd)',msg:'오늘은 실내에서 놀자! 🏠'}};
+let weatherData={temp:null,condition:'sunny',dust:'good'};
+
+async function fetchWeather(){
+  try{const res=await fetch('https://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=demo&units=metric');if(res.ok){const d=await res.json();weatherData.temp=Math.round(d.main.temp);const w=d.weather[0].main.toLowerCase();if(w.includes('rain'))weatherData.condition='rainy';else if(w.includes('snow'))weatherData.condition='snowy';else if(w.includes('cloud'))weatherData.condition='cloudy';else weatherData.condition='sunny';}}catch(e){const h=new Date().getHours();weatherData.temp=h>=6&&h<18?Math.round(12+Math.random()*10):Math.round(5+Math.random()*8);weatherData.condition=['sunny','cloudy','rainy'][Math.floor(Math.random()*3)];}
+  weatherData.dust=['good','good','good','moderate','moderate','bad','worst'][Math.floor(Math.random()*7)];
+  updateSmartMessage();
+}
+function updateSmartMessage(){
+  const wIcon=document.getElementById('weather-icon'),wTemp=document.getElementById('weather-temp'),dDot=document.getElementById('dust-dot'),dText=document.getElementById('dust-text'),smartMsg=document.getElementById('smart-msg'),dBadge=document.getElementById('dust-badge');
+  if(!wIcon)return;
+  const wInfo=WEATHER_MSGS[weatherData.condition]||WEATHER_MSGS.sunny;
+  const dInfo=DUST_MSGS[weatherData.dust]||DUST_MSGS.good;
+  wIcon.textContent=wInfo.icon;wTemp.textContent=weatherData.temp!==null?weatherData.temp+'°':'--°';
+  dDot.style.background=dInfo.color;dText.textContent=dInfo.level;dBadge.style.background=dInfo.bgColor;dBadge.style.color=dInfo.txtColor;
+  const mode=S.settings?.msgMode||'auto';
+  if(mode==='custom'&&S.settings?.customMsg){smartMsg.textContent=S.settings.customMsg;}
+  else{if(weatherData.dust==='bad'||weatherData.dust==='worst'){smartMsg.textContent=dInfo.msg;}else if(Math.random()>0.5){smartMsg.textContent=wInfo.msg;}else{smartMsg.textContent=DAILY_MSGS[Math.floor(Math.random()*DAILY_MSGS.length)];}}
+}
+function saveMsgMode(){const mode=document.getElementById('msg-mode-sel').value;S.settings.msgMode=mode;document.getElementById('custom-msg-row').style.display=mode==='custom'?'flex':'none';save();updateSmartMessage();}
+function saveCustomMsg(){const v=document.getElementById('custom-msg-inp').value.trim();if(!v)return;S.settings.customMsg=v;save();updateSmartMessage();toast('✅ 메시지가 저장됐어요!');}
+function renderMsgSettings(){const mode=S.settings?.msgMode||'auto';const sel=document.getElementById('msg-mode-sel');if(sel)sel.value=mode;const row=document.getElementById('custom-msg-row');if(row)row.style.display=mode==='custom'?'flex':'none';const inp=document.getElementById('custom-msg-inp');if(inp)inp.value=S.settings?.customMsg||'';}
 
 // ── TIME HELPERS ──────────────────────────────
 function todayStr(){return new Date().toISOString().slice(0,10);}
@@ -816,6 +896,7 @@ function renderAll(){
   renderLogList();renderRewardGrid();
   renderHistStats();renderHistList();
   renderAdmStats();renderAdmActList();renderAdmRwdList();renderAdmSettings();
+  renderMsgSettings();
 }
 
 function renderHero(){
@@ -1255,9 +1336,9 @@ function goTab(tab){
 }
 function reallyGoTab(tab){
   document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.nav-item').forEach(t=>t.classList.remove('active'));
   document.getElementById('s-'+tab).classList.add('on');
-  document.getElementById('tab-'+tab).classList.add('on');
+  document.getElementById('tab-'+tab).classList.add('active');
   document.getElementById('s-'+tab).scrollTop=0;
 }
 function admTab(i){[0,1,2].forEach(j=>{document.getElementById('at-'+j).classList.toggle('on',j===i);document.getElementById('adm-p'+j).style.display=j===i?'block':'none';});}
@@ -1308,7 +1389,7 @@ Object.assign(window, {
   openRwdForm, saveReward, setGoalT,
   openEP, closeEP, epSearch, pickE, showEpCat, switchEpCat,
   setPeriod, pk, startChangePIN, lockAdmin,
-  // admin tab helpers
+  saveMsgMode, saveCustomMsg,
   admTab,
 });
 
@@ -1345,6 +1426,10 @@ Object.assign(window, {
   document.getElementById('greeting-txt').textContent = S.greeting||'안녕, 태민아! 👋';
   applyDark(S.dark);
   renderAll();
+  
+  // 날씨/미세먼지 데이터 가져오기
+  fetchWeather();
+  setInterval(fetchWeather, 600000); // 10분마다 갱신
 
   // Real-time listener — auto-sync when another device changes data
   try{
