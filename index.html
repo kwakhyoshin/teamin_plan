@@ -682,18 +682,35 @@ function defaultState(){
 
 let S = defaultState();
 let _saveTimer = null;
+let _isSaving = false;      // true while a setDoc write is in-flight
+let _pendingSave = false;   // another save was requested while one was in-flight
+let _lastSavedJSON = '';    // tracks what we last wrote → prevents echo loop
 
-// Debounced save — batches rapid saves into one write (300ms)
+// Robust debounced save with in-flight guard
 function save(){
+  if(_isSaving){
+    // A write is already in-flight — just mark that another is needed
+    _pendingSave = true;
+    return;
+  }
   clearTimeout(_saveTimer);
   _saveTimer = setTimeout(async ()=>{
+    _isSaving = true;
+    _pendingSave = false;
     try{
+      const json = JSON.stringify(S);
       await setDoc(DATA_DOC, S);
+      _lastSavedJSON = json; // remember what we just wrote
+      localStorage.setItem('taemin_v6_backup', json);
     }catch(e){
-      console.warn('Firebase save failed, falling back to localStorage', e);
+      console.warn('Firebase save failed', e);
       localStorage.setItem('taemin_v6_backup', JSON.stringify(S));
+    } finally {
+      _isSaving = false;
+      // If another save was requested while we were writing, do it now
+      if(_pendingSave) save();
     }
-  }, 300);
+  }, 400);
 }
 
 // Show loading overlay while fetching data
@@ -1332,14 +1349,23 @@ Object.assign(window, {
   // Real-time listener — auto-sync when another device changes data
   try{
     onSnapshot(DATA_DOC, (snap)=>{
-      if(snap.exists() && !document.hidden){
-        const incoming = snap.data();
-        // Only update if data actually changed (avoid overwriting mid-edit)
-        if(JSON.stringify(incoming) !== JSON.stringify(S)){
-          S = Object.assign(defaultState(), incoming);
-          renderAll();
-        }
-      }
+      if(!snap.exists()) return;
+
+      const incomingJSON = JSON.stringify(snap.data());
+
+      // Skip if:
+      // 1. We are currently saving (this is our own echo coming back)
+      // 2. This is exactly what we just saved (echo after write completes)
+      // 3. Incoming data is identical to current state
+      if(_isSaving) return;
+      if(incomingJSON === _lastSavedJSON) return;
+      if(incomingJSON === JSON.stringify(S)) return;
+
+      // Another device changed the data — apply it
+      S = Object.assign(defaultState(), snap.data());
+      _lastSavedJSON = incomingJSON;
+      renderAll();
+      console.log('🔄 다른 기기에서 데이터가 업데이트됐어요');
     });
   }catch(e){ console.warn('Realtime listener failed:', e); }
 })();
