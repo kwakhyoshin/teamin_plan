@@ -800,7 +800,34 @@ const DUST_MSGS={good:{level:'좋음',color:'var(--gn)',bgColor:'var(--gn-lt)',t
 let weatherData={temp:null,condition:'sunny',dust:'good'};
 
 async function fetchWeather(){
-  try{const res=await fetch('https://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=demo&units=metric');if(res.ok){const d=await res.json();weatherData.temp=Math.round(d.main.temp);const w=d.weather[0].main.toLowerCase();if(w.includes('rain'))weatherData.condition='rainy';else if(w.includes('snow'))weatherData.condition='snowy';else if(w.includes('cloud'))weatherData.condition='cloudy';else weatherData.condition='sunny';}}catch(e){const h=new Date().getHours();weatherData.temp=h>=6&&h<18?Math.round(12+Math.random()*10):Math.round(5+Math.random()*8);weatherData.condition=['sunny','cloudy','rainy'][Math.floor(Math.random()*3)];}
+  try{
+    // wttr.in 무료 날씨 API 사용 (서울)
+    const res=await fetch('https://wttr.in/Seoul?format=j1');
+    if(res.ok){
+      const d=await res.json();
+      const current=d.current_condition[0];
+      weatherData.temp=parseInt(current.temp_C);
+      const code=parseInt(current.weatherCode);
+      // weatherCode: 113=맑음, 116=구름조금, 119/122=흐림, 176-311=비, 320+=눈
+      if(code>=320)weatherData.condition='snowy';
+      else if(code>=176)weatherData.condition='rainy';
+      else if(code>=119)weatherData.condition='cloudy';
+      else weatherData.condition='sunny';
+    }
+  }catch(e){
+    console.log('Weather API failed, using fallback');
+    const h=new Date().getHours();
+    const month=new Date().getMonth();
+    // 계절별 기본 온도 (한국 기준)
+    let baseTemp=15;
+    if(month>=5&&month<=8)baseTemp=25; // 여름
+    else if(month>=11||month<=1)baseTemp=0; // 겨울
+    else if(month>=2&&month<=4)baseTemp=12; // 봄
+    else baseTemp=15; // 가을
+    weatherData.temp=baseTemp+Math.round((Math.random()-0.5)*8);
+    weatherData.condition=['sunny','sunny','cloudy','rainy'][Math.floor(Math.random()*4)];
+  }
+  // 미세먼지 (실제 API 없이 시뮬레이션)
   weatherData.dust=['good','good','good','moderate','moderate','bad','worst'][Math.floor(Math.random()*7)];
   updateSmartMessage();
 }
